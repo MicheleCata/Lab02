@@ -14,9 +14,11 @@ public class AlienDictionary {
 		Word w= null;
 		if (mappaParole.get(alienWord)==null) {
 			w= new Word (alienWord, translation);
+			w.addTraduzione(translation);
 			mappaParole.put(alienWord, w);
 		} else {
-			mappaParole.get(alienWord).setTranslation(translation);
+			mappaParole.get(alienWord).addTraduzione(translation);
+			
 		}
 		
 	}
@@ -27,7 +29,11 @@ public class AlienDictionary {
 		if (w==null) 
 			return null;
 		
-		return w.getTranslation();
+		String risultato= "";
+		for (String p: w.getTraduzioni()) 
+			risultato+= p+"\n";
+		
+		return risultato;
 	}
 	
 	public void rimuoviTutto() {
