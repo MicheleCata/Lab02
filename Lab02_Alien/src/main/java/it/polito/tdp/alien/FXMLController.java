@@ -32,31 +32,44 @@ public class FXMLController {
     
     @FXML
     void doTranslate(ActionEvent event) {
+    	
+    	txtRisultato.clear();
     	String testo = txtParola.getText().toLowerCase();
     	
-    	if ((testo.matches(".*[a-zA-Z].*")==false)) {
-    		txtRisultato.setText("Errore!! caratteri non validi, devi inserire caratteri: a-z, A-Z");
+    	if (testo.length()==0) {
+    		txtRisultato.setText("Inserisci almeno una parola ");
+    		return;
+    	}
+    	
+    	if ((testo.matches(".*[a-zA-Z?].*")==false)) {
+    		txtRisultato.setText("Errore!! caratteri non validi, devi inserire caratteri: a-z, A-Z o un ?");
     		return;
     	}
     	
     	String [] campi = testo.split(" ");
     	String alienWord;
     	String translation;
+    	String risultato;
     	if (campi.length==2) {
     		 alienWord = campi[0];
     		 translation= campi[1];
-    		 
+
     		 Word w = new Word (alienWord, translation);
-    		 
     		 model.addWord(alienWord, translation);
     		 txtRisultato.setText(w.toString());
     		 txtParola.setText("");
     	} else if (campi.length==1) {
-    		
     		alienWord = campi[0];
-    		
-    		txtRisultato.setText(model.translateWord(alienWord));
-    		txtParola.setText("");
+    		if ((alienWord.matches("[a-zA-Z?]*") && !alienWord.matches("[a-zA-Z]*")))
+    				risultato =(model.translateWordWildCard(alienWord));
+    		else 
+    			risultato = (model.translateWord(alienWord));
+    		if (risultato!=null)
+    			txtRisultato.setText(risultato);
+    		else {
+    			txtRisultato.setText("La parola non è presente nel dizionario. ");
+    			txtParola.setText("");
+    		}
     	}
     		
     }

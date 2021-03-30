@@ -63,11 +63,18 @@ public class Word {
 	}
 	
 	public void addTraduzione (String translation) {
-		traduzioni.add(translation);
+		if (!traduzioni.contains(translation))
+			traduzioni.add(translation);
 	}
 
 	public List<String> getTraduzioni() {
 		return traduzioni;
+	}
+
+	public boolean compareWild(String alienWord2) {
+			if (alienWord.matches(alienWord2))
+				return true;
+		return false;
 	}
 	
 	

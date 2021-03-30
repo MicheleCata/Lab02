@@ -36,6 +36,26 @@ public class AlienDictionary {
 		return risultato;
 	}
 	
+	public String translateWordWildCard (String alienWord) {
+		
+		alienWord = alienWord.replaceAll("\\?", ".");
+		int cont=0;
+		String risultato= "";
+		for (Word w: mappaParole.values()) {
+			if (w.compareWild(alienWord)) {
+				cont++;
+				for (String p: w.getTraduzioni()) 
+					risultato+= p+"\n";
+			}
+		}
+		if (cont!=0)
+			return risultato;
+		else
+			return null;
+			
+	}
+	
+	
 	public void rimuoviTutto() {
 		mappaParole.clear();
 	}
